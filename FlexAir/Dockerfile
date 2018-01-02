@@ -48,8 +48,17 @@ RUN cd /home && wget https://swfobject.googlecode.com/files/swfobject_2_2.zip \
   && unzip swfobject_2_2.zip \
   && rm swfobject_2_2.zip
 
-#RUN    wget http://airdownload.adobe.com/air/mac/download/latest/AdobeAIRSDK.tbz2 -O /opt/adobe-air-sdk/AdobeAIRSDK.tbz2 \
-#    && cd /opt/adobe-air-sdk && tar xjf AdobeAIRSDK.tbz2 \
-#    && rm AdobeAIRSDK.tbz2 \
-#    && echo "export AIR_HOME=/opt/adobe-air-sdk" >> /etc/profile
+RUN apt-get install -y vim 
 
+RUN echo -e "<body> \n\
+<script src=\"http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js\" type=\"text/javascript\"></script> \n\
+<script type=\"text/javascript\"> \n\
+(function() { \n\
+    var flashvars = {}, \n\
+    params = {wmode:\"direct\"}, \n\
+    attributes = {}; \n\
+    swfobject.embedSWF(\"demo_web.swf\", \"placeholder\", \"800\", \"600\", "9.0.0", \"/swf/expressInstall.swf\", flashvars, params, attributes); \n\
+})(); \n\
+</script> \n\
+<div id=\"placeholder\"></div> \n\
+</body>" > /home/embedded.html
